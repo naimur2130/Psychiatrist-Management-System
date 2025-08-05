@@ -25,4 +25,8 @@
     <None Include="wwwroot\Images\Cover.jpeg" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Psychos\" />
+  </ItemGroup>
+
 </Project>

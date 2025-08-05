@@ -13,8 +13,12 @@ namespace Psychiatrist_Management_System.ViewModel
         [Required]
         public string PsychoGender { get; set; }
         [Required]
+        public string HospitalName { get; set; }
+        [Required]
         public string PsychoPhone { get; set; }
         [Required]
         public string Specialization { get; set; }
+        [Required]
+        public IFormFile PsychoImage { get; set; }
     }
 }

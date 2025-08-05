@@ -104,7 +104,7 @@ namespace Psychiatrist_Management_System.Areas.Identity.Pages.Account
                     }
                     if (Input.Role == "Psychiatrist")
                     {
-                        return RedirectToAction("Index", "Dashboard", new { area = "PsychiatristArea" });
+                        return RedirectToAction("CompleteProfile", "Psychiatrist", new { area = "PsychiatristArea" });
                     }
                     if (Input.Role == "Patient")
                     {

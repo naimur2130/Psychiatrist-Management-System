@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Psychiatrist_Management_System.Models;
 
 namespace Psychiatrist_Management_System.Data
 {
@@ -9,5 +10,6 @@ namespace Psychiatrist_Management_System.Data
             : base(options)
         {
         }
+        public DbSet<PsychiatristProfile> PsychiatristProfile  { get; set; }
     }
 }
