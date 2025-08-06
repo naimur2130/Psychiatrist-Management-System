@@ -1,16 +1,18 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Psychiatrist_Management_System.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
 namespace Psychiatrist_Management_System.Areas.Identity.Pages.Account
 {
@@ -20,14 +22,17 @@ namespace Psychiatrist_Management_System.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ApplicationDbContext _context;
 
         public LoginModel(SignInManager<IdentityUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -107,7 +112,17 @@ namespace Psychiatrist_Management_System.Areas.Identity.Pages.Account
                     }
                     if (await _userManager.IsInRoleAsync(user, "Psychiatrist"))
                     {
-                        return RedirectToAction("Index", "Dashboard", new { area = "PsychiatristArea" });
+                        var profile = await _context.PsychiatristProfile.FirstOrDefaultAsync(p => p.UserId == user.Id);
+                        if (profile != null && !profile.IsApproved)
+                        {
+                            ModelState.AddModelError(string.Empty, "Your account is pending approval by an admin.");
+                            return Page();
+                        }
+                        else
+                        {
+                            return RedirectToAction("Index", "Dashboard", new { area = "PsychiatristArea" });
+                        }
+                            
                     }
                     if (await _userManager.IsInRoleAsync(user, "Patient"))
                     {

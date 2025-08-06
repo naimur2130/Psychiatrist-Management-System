@@ -64,12 +64,13 @@ namespace Psychiatrist_Management_System.Areas.PsychiatristArea.Controllers
                     PsychoPhone = model.PsychoPhone,
                     HospitalName = model.HospitalName,
                     Specialization = model.Specialization,
-                    PsychoImage = @"\images\products\" + uniqueFileName
+                    PsychoImage = "/images/psychos/" + uniqueFileName,
+                    IsApproved = false
                 };
                 
                 _context.PsychiatristProfile.Add(psychiatrist);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index", "Dashboard", new { area = "PsychiatristArea" });
+                return RedirectToPage("/Account/Login", new { area = "Identity" });
             }
             return View(model);
         }

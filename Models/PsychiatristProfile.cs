@@ -15,5 +15,6 @@ namespace Psychiatrist_Management_System.Models
         public string PsychoPhone { get; set; }
         public string Specialization { get; set; }
         public string PsychoImage { get; set; }
+        public bool IsApproved { get; set; } = false;
     }
 }

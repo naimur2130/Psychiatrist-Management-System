@@ -1,0 +1,29 @@
+﻿@model List<PsychiatristProfile>
+
+<div class="container">
+    <div class="row">
+        @foreach (var p in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow">
+                    <img src="@p.PsychoImage" class="card-img-top" alt="Psychiatrist Image" style="height: 250px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@p.PsychoName</h5>
+                        <p class="card-text"><strong>Email:</strong> @p.PsychoEmail</p>
+                        <p class="card-text"><strong>Age:</strong> @p.PsychoAge</p>
+                        <p class="card-text"><strong>Gender:</strong> @p.PsychoGender</p>
+                        <p class="card-text"><strong>Phone:</strong> @p.PsychoPhone</p>
+                        <p class="card-text"><strong>Hospital:</strong> @p.HospitalName</p>
+                        <p class="card-text"><strong>Specialization:</strong> @p.Specialization</p>
+                    </div>
+                    <div class="card-footer text-center">
+                        <form asp-action="ApprovePsychiatrist" method="post">
+                            <input type="hidden" name="id" value="@p.PsychoId" />
+                            <button class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
